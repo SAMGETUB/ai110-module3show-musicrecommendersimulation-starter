@@ -18,6 +18,24 @@ Replace this paragraph with your own summary of what your version does.
 ## How The System Works
 
 Explain your design in plain language.
+Real-world recommendation systems like Spotify use two main approaches. The first is collaborative filtering, which tracks your listening patterns and compares them to other users. If another user has the same listening habits as you and likes a song, the system recommends that song to you. The second is content-based filtering, which looks at the attributes of songs you listen to — like genre and artist and recommends other songs with similar attributes.
+
+Our system uses content-based filtering. It scores each song based on how well it matches the user's preferences across five features: genre, mood, energy, tempo_bpm, and acousticness. The scoring recipe is: +2.0 points for a genre match, +1.0 point for a mood match, and an energy score calculated as 1 - abs(user_energy - song_energy) to reward songs closest to the user's target energy.
+
+Algorithm Recipe
+The system scores each song using the following rules:
+
+Genre match: +2.0 points
+Mood match: +1.0 point
+Energy similarity: 1 - abs(user_energy - song_energy)
+Tempo similarity: 1 - abs(user_tempo - song_tempo) / 180
+Acousticness similarity: 1 - abs(user_acousticness - song_acousticness)
+
+The maximum possible score is 6.0. Songs are ranked from highest to lowest score and the top 5 are returned.
+
+Potential Bias
+This system over-prioritizes genre and mood matching. A song that matches the user's genre gets +2.0 points regardless of how well its energy or tempo fits. This means a great song with the perfect energy and tempo but a different genre could rank lower than a mediocre genre match.
+
 
 Some prompts to answer:
 
